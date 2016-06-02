@@ -20,3 +20,11 @@ you may execute a script e.g. like this (from any folder you like):
 A list of available parameters is shown using the -help option:
 
     ugshell -ex Examples/laplace.lua -help
+
+
+To see a demonstration of refinement projectors you may execute the following:
+	
+	ugshell -ex Examples/laplace.lua -grid grids/sphere_2d.ugx
+
+When opening the output (sol_laplace_2d.vtu) in Paraview or Visit you'll notice
+the smooth boundary approximation and circular inner grid lines.
