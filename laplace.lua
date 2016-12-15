@@ -129,8 +129,9 @@ b = GridFunction(approxSpace)
 u:set(0.0)
 domainDisc:adjust_solution(u)
 domainDisc:assemble_linear(A, b)
+
 solver:init(A, u)
-solver:apply_return_defect(u,b)
+solver:apply(u, b)
 
 
 solFileName = "sol_laplace_"..dim.."d"
