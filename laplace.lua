@@ -85,7 +85,6 @@ function DirichletValue3d(x, y, z, t)
 	return true, math.sin(s*x) + math.sin(s*y) + math.sin(s*z)
 end
 
-
 -- set up approximation space
 approxSpace = ApproximationSpace(dom)
 approxSpace:add_fct("c", "Lagrange", 1)
@@ -97,7 +96,7 @@ approxSpace:print_statistic()
 
 
 -- set up discretization
-elemDisc = ConvectionDiffusion("c", "Inner", disc)
+elemDisc = ConvectionDiffusion("c", "Inner", "fv1")
 elemDisc:set_diffusion(1.0)
 elemDisc:set_source("Source"..dim.."d")
 
@@ -133,8 +132,18 @@ domainDisc:assemble_linear(A, b)
 solver:init(A, u)
 solver:apply_return_defect(u,b)
 
+
 solFileName = "sol_laplace_"..dim.."d"
 print("writing solution to '" .. solFileName .. "'...")
 WriteGridFunctionToVTK(u, solFileName)
+SaveVectorForConnectionViewer(u, solFileName .. ".vec")
+
+matFileName = "A"..dim.."d.mat"
+print("writing stiffness matrix to " .. matFileName)
+SaveMatrixForConnectionViewer(u, A, matFileName)
+
+rhsFileName = "rhs_laplace"..dim.."d.vec"
+print("writing rhs to '" .. rhsFileName .. "'...")
+SaveVectorForConnectionViewer(b, rhsFileName)
 
 print("done")
