@@ -55,8 +55,10 @@ dom = util.CreateDomain(gridName, 0, requiredSubsets)
 -- Refine the domain (redistribution is handled internally for parallel runs)
 print("refining...")
 
+-- This balancing setup makes sense for structured grids with uniform refinement
 balancerDesc = {
 		partitioner = "staticBisection",
+		hierarchy = "noRedists"
 	}
 
 util.refinement.CreateRegularHierarchy(dom, numRefs, true, balancerDesc)
