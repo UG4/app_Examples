@@ -1,4 +1,4 @@
--- Copyright (c) 2010-2016:  G-CSC, Goethe University Frankfurt
+-- Copyright (c) 2010-2017:  G-CSC, Goethe University Frankfurt
 -- Authors: Andreas Vogel, Sebastian Reiter
 -- 
 -- This file is part of UG4.
@@ -40,8 +40,11 @@ gridName	= util.GetParam("-grid", "grids/laplace_sample_grid_"..dim.."d.ugx",
 							"filename of underlying grid")
 numRefs		= util.GetParamNumber("-numRefs", 3, "number of refinements")
 writeSolution	= util.HasParamOption("-writeSolution", "If specified, the solution will be written to a file.")
+redistElemThreshold = util.GetParamNumber("-redistElemThreshold", 8, "Number of elements that each target process should receive")
+redistProcs = util.GetParamNumber("-redistProcs", 64, "Number of processes to which each process redistributes on a distribution level.")
 
-util.CheckAndPrintHelp("Laplace-Problem");
+util.CheckAndPrintHelp("Laplace-HPC");
+util.PrintArguments()
 
 
 -- initialize ug with the world dimension and the algebra type
@@ -57,8 +60,16 @@ print("refining...")
 
 -- This balancing setup makes sense for structured grids with uniform refinement
 balancerDesc = {
-		partitioner = "staticBisection",
-		hierarchy = "noRedists"
+		partitioner = {
+			name = "staticBisection",
+			clusteredSiblings = false
+		},
+
+		hierarchy = {
+			name 						= "noRedists",
+			minElemsPerProcPerLevel		= redistElemThreshold,
+			maxRedistProcs				= redistProcs,
+		},
 	}
 
 util.refinement.CreateRegularHierarchy(dom, numRefs, true, balancerDesc)
@@ -125,6 +136,17 @@ solverDesc = {
 		approxSpace	= approxSpace,
 		smoother	= "jac",
 		baseSolver	= "lu"
+	},
+
+--	Settings make sure that exactly 5 iterations are performed.
+--	This is important to compare solver run times.
+--	NOTE: This means that the solution step will not be considered successful
+	convCheck = {
+		name		= "standard",
+		iterations	= 5,
+		absolute	= 1e-24,
+		reduction	= 1e-24,
+		verbose		= true
 	}
 }
 
@@ -143,6 +165,10 @@ domainDisc:assemble_linear(A, b)
 solver:init(A, u)
 solver:apply(u, b)
 
+print("NOTE: The hard limit on iteration numbers is intentional here, to allow")
+print("      for a better comparability of run-times. Please make sure that the")
+print("      reached defect only varies slightly regarding different refinement")
+print("      and process numbers.")
 
 if writeSolution == true then
 	solFileName = "sol_laplace_"..dim.."d"
