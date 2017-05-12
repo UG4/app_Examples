@@ -91,13 +91,7 @@ solverDesc = {
 		type		= "gmg",
 		approxSpace	= approxSpace,
 		smoother	= "jac",
-		baseSolver	= "lu",
-		mgStats = {
-    		type = "standard",
-    		exitOnError = false,
-    		writeErrVecs = false,
-    		writeErrDiffs = false
-    	}
+		baseSolver	= "lu"
 	}
 }
 
@@ -120,10 +114,5 @@ solFileName = "sol_laplace_" .. dim .. "d"
 print("writing solution to '" .. solFileName .. "'...")
 WriteGridFunctionToVTK(u, solFileName)
 SaveVectorForConnectionViewer(u, solFileName .. ".vec")
-
-if solverDesc.precond.mgStats then
-	solverDesc.precond.mgStats.instance:print()
-end
-
 
 print("done")
