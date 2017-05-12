@@ -34,16 +34,18 @@ ug_load_script("ug_util.lua")
 ug_load_script("util/refinement_util.lua")
 
 -- Parse parameters and print help
-gridName	= util.GetParam("-grid", "grids/laplace_circle_2d.ugx",
+dim			= util.GetParamNumber("-dim", 3, "Dimension of the problem", {2,3})
+
+gridName	= util.GetParam("-grid", "grids/laplace_sphere_" .. dim .. "d.ugx",
 							"filename of underlying grid")
-numRefs		= util.GetParamNumber("-numRefs", 5, "number of refinements")
+numRefs		= util.GetParamNumber("-numRefs", 4, "number of refinements")
 
 
 util.CheckAndPrintHelp("Laplace-Problem");
 
 
 -- initialize ug with the world dimension 2 and scalar matrix coefficients
-InitUG(2, AlgebraType("CPU", 1));
+InitUG(dim, AlgebraType("CPU", 1));
 
 
 -- Load a domain without initial refinements.
@@ -88,8 +90,14 @@ solverDesc = {
 	precond = {
 		type		= "gmg",
 		approxSpace	= approxSpace,
-		smoother	= "ilu",
-		baseSolver	= "lu"
+		smoother	= "jac",
+		baseSolver	= "lu",
+		mgStats = {
+    		type = "standard",
+    		exitOnError = false,
+    		writeErrVecs = false,
+    		writeErrDiffs = false
+    	}
 	}
 }
 
@@ -108,9 +116,14 @@ solver:init(A, u)
 solver:apply(u, b)
 
 
-solFileName = "sol_laplace_2d"
+solFileName = "sol_laplace_" .. dim .. "d"
 print("writing solution to '" .. solFileName .. "'...")
 WriteGridFunctionToVTK(u, solFileName)
 SaveVectorForConnectionViewer(u, solFileName .. ".vec")
+
+if solverDesc.precond.mgStats then
+	solverDesc.precond.mgStats.instance:print()
+end
+
 
 print("done")
