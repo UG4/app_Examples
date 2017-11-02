@@ -41,10 +41,12 @@ ug_load_script("util/refinement_util.lua")
 ug_load_script("util/profiler_util.lua")
 
 -- Parse parameters and print help
-gridName	= util.GetParam("-grid", "grids/springboard.ugx",
-							"filename of underlying grid")
-numRefs		= util.GetParamNumber("-numRefs", 2, "number of refinements")
-order		= util.GetParamNumber("-order", 1, "order of the function space")
+params = {}
+params.gridName	= util.GetParam("-grid", "grids/springboard.ugx", "filename of underlying grid")
+params.numRefs	= util.GetParamNumber("-numRefs", 2, "number of refinements")
+params.order	= util.GetParamNumber("-order", 1, "order of the function space")
+params.smoother	= util.GetParam("-smoother", "gs", "Smoother for the multigrid method. Options are 'gs' and 'ilu'.")
+
 
 util.CheckAndPrintHelp("Solid Mechanics: Simple Deformation");
 
@@ -55,19 +57,19 @@ InitUG(3, AlgebraType("CPU", 1));
 
 -- Load a domain without initial refinements.
 requiredSubsets = {"Flex", "Force", "Fixed"}
-dom = util.CreateDomain(gridName, 0, requiredSubsets)
+dom = util.CreateDomain(params.gridName, 0, requiredSubsets)
 
 
 -- Refine the domain (redistribution is handled internally for parallel runs)
 print("refining...")
-util.refinement.CreateRegularHierarchy(dom, numRefs, true)
+util.refinement.CreateRegularHierarchy(dom, params.numRefs, true)
 
 
 -- set up approximation space
 approxSpace = ApproximationSpace(dom)
-approxSpace:add_fct("ux", "Lagrange", order)          
-approxSpace:add_fct("uy", "Lagrange", order)          
-approxSpace:add_fct("uz", "Lagrange", order)
+approxSpace:add_fct("ux", "Lagrange", params.order)          
+approxSpace:add_fct("uy", "Lagrange", params.order)          
+approxSpace:add_fct("uz", "Lagrange", params.order)
 
 approxSpace:init_levels()
 approxSpace:init_top_surface()
@@ -118,15 +120,17 @@ domainDisc:assemble_linear(A, b)
 print("\nsolving...")
 
 -- set up solver (using 'util/solver_util.lua')
+smoothers = {
+	gs = {type = "gs", consistentInterfaces = true},
+	ilu = {type = "ilu", overlap = true},
+}
+
 solverDesc = {
 	type = "bicgstab",
 	precond = {
 		type		= "gmg",
 		approxSpace	= approxSpace,
-		smoother	= {	-- alternate smoother: "ilu" with 'overlap = true'
-			type = "gs",
-			consistentInterfaces = true
-		},
+		smoother	= smoothers[params.smoother],
 		baseSolver	= "lu"
 	}
 }
