@@ -38,6 +38,7 @@ PluginRequired("SmallStrainMechanics")
 -- Load utility scripts (e.g. from from ugcore/scripts)
 ug_load_script("ug_util.lua")
 ug_load_script("util/refinement_util.lua")
+ug_load_script("util/profiler_util.lua")
 
 -- Parse parameters and print help
 gridName	= util.GetParam("-grid", "grids/springboard.ugx",
@@ -54,6 +55,7 @@ InitUG(3, AlgebraType("CPU", 1));
 -- Load a domain without initial refinements.
 requiredSubsets = {"Flex", "Force", "Fixed"}
 dom = util.CreateDomain(gridName, 0, requiredSubsets)
+
 
 -- Refine the domain (redistribution is handled internally for parallel runs)
 print("refining...")
@@ -120,7 +122,10 @@ solverDesc = {
 	precond = {
 		type		= "gmg",
 		approxSpace	= approxSpace,
-		smoother	= "gs",
+		smoother	= {	-- alternate smoother: "gs" with 'constistentInterface = true'
+			type = "ilu",
+			overlap = true
+		},
 		baseSolver	= "lu"
 	}
 }
@@ -140,5 +145,16 @@ vtkWriter:select_nodal("ux,uy,uz", "displacement")	-- write a displacement vecto
 vtkWriter:print(solFileName, u, 0, 0, false)
 
 SaveVectorForConnectionViewer(u, solFileName .. ".vec")
+
+
+if GetProfilerAvailable() == true then
+	WriteProfileData("solmech-simple-deformation.pdxml")
+	print("")
+	print("--- PROFILES --- ")
+	util.PrintProfile_TotalTime("main                           ")
+	util.PrintProfile_TotalTime("  assemble_linear              ")
+	util.PrintProfile_TotalTime("  LS_InitPrecond               ")
+	util.PrintProfile_TotalTime("  LS_ApplyReturnDefect         ")
+end
 
 print("done")
