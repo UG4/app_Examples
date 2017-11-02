@@ -44,6 +44,7 @@ ug_load_script("util/profiler_util.lua")
 gridName	= util.GetParam("-grid", "grids/springboard.ugx",
 							"filename of underlying grid")
 numRefs		= util.GetParamNumber("-numRefs", 2, "number of refinements")
+order		= util.GetParamNumber("-order", 1, "order of the function space")
 
 util.CheckAndPrintHelp("Solid Mechanics: Simple Deformation");
 
@@ -64,9 +65,9 @@ util.refinement.CreateRegularHierarchy(dom, numRefs, true)
 
 -- set up approximation space
 approxSpace = ApproximationSpace(dom)
-approxSpace:add_fct("ux", "Lagrange", 1)          
-approxSpace:add_fct("uy", "Lagrange", 1)          
-approxSpace:add_fct("uz", "Lagrange", 1)
+approxSpace:add_fct("ux", "Lagrange", order)          
+approxSpace:add_fct("uy", "Lagrange", order)          
+approxSpace:add_fct("uz", "Lagrange", order)
 
 approxSpace:init_levels()
 approxSpace:init_top_surface()
@@ -122,9 +123,9 @@ solverDesc = {
 	precond = {
 		type		= "gmg",
 		approxSpace	= approxSpace,
-		smoother	= {	-- alternate smoother: "gs" with 'constistentInterface = true'
-			type = "ilu",
-			overlap = true
+		smoother	= {	-- alternate smoother: "ilu" with 'overlap = true'
+			type = "gs",
+			consistentInterfaces = true
 		},
 		baseSolver	= "lu"
 	}
