@@ -16,7 +16,7 @@ https://github.com/UG4/ugcore provides a short introduction to several example s
 
 ## How to use the example scripts ##
 Once you compiled UG4 and after sourcing 'ugbash'
-(cf. https://github.com/UG4/ughub/wiki#compilation-of-ug4),
+(cf. https://github.com/UG4/ughub#compilation-of-ug4),
 you may execute a script like this (from any folder you like):
 
     ugshell -ex Examples/laplace.lua
