@@ -72,7 +72,7 @@ approxSpace:print_statistic()
 -- http://ug4.github.io/docs/plugins/classug_1_1_convection_diffusion_plugin_1_1_convection_diffusion_base.html#details
 
 elemDisc = ConvectionDiffusion("c", "Inner", "fv1")
-elemDisc:set_diffusion(1.0)
+elemDisc:set_diffusion(ConstUserMatrix ({1.0, 0, 0, 1.0}))
 elemDisc:set_source(0)
 
 dirichletBND = DirichletBoundary()

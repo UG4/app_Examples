@@ -31,7 +31,7 @@
 -- run this script like this:
 -- 'ugshell -ex Examples/solmech-simple-deformation.lua'
 -- or use a different geometry:
--- 'ugshell -ex Examples/solmech-simple-deformation.lua -grid grids/cylinder.ugx'
+-- 'ugshell -ex Examples/solmech-simple-deformation.lua -grid grids/solmech_cylinder.ugx'
 
 PluginRequired("SmallStrainMechanics")
 

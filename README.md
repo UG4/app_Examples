@@ -2,12 +2,16 @@
 
 **UG4-App** providing example scripts for various problems.
 
-Copyright 2010-2017 Goethe Center for Scientific Computing, University Frankfurt
+Copyright 2010-2018 Goethe Center for Scientific Computing, University Frankfurt
 
 Please install/clone this repository through UG4's package manager
 [ughub](https://github.com/UG4/ughub):
 
     ughub install Examples
+
+
+## Overview ##
+https://github.com/UG4/ugcore provides a short introduction to several example scripts (with pictures).
 
 
 ## How to use the example scripts ##
