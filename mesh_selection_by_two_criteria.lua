@@ -102,7 +102,7 @@ while eIter:unequal(mesh:edge_selection_end()) do
 	dirVec = Vec3dSubtract(mesh:position(vrt2), mesh:position(vrt1))
 
 	-- debug output
-	print(dirVec:coord(0) .. "; " .. dirVec:coord(1) .. "; " .. dirVec:coord(2))
+	--print(dirVec:coord(0) .. "; " .. dirVec:coord(1) .. "; " .. dirVec:coord(2))
 
 	-- if direction of currently investigated edge does not meet the target direction, then deselect
 	if Vec3dNorm(Vec3dSubtract(targetDirection, dirVec)) > 1e-10 then				
