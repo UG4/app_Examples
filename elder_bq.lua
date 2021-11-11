@@ -176,7 +176,13 @@ solverDesc = {
 		type = "bicgstab",
 		precond = {
 	        type            = "gmg",        -- preconditioner ["gmg", "ilu", "ilut", "jac", "gs", "sgs"]
-	        smoother = ilu,
+	        smoother = {
+			type = "ilu",
+			ordering = {
+				type = "Lex",
+				dir  = "y"
+			}
+	        },
 	        cycle           = "V",          -- gmg-cycle ["V", "F", "W"]
 	        preSmooth       = 2,            -- number presmoothing steps
 	        postSmooth      = 2,            -- number postsmoothing steps
