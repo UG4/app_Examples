@@ -1,0 +1,306 @@
+*   -noterm:             Terminal logging will be disabled.                    *
+*   -logtofile filename: Output will be written to the specified file.         *
+*   -call:               Combines all following arguments to one lua command   *
+*                        and executes it. Ignored if it follows '-ex'.         *
+*                        '(', ')', and '"' have to be escaped, e.g.: '\('      *
+* Additional parameters are passed to the script through ugargc and ugargv.    *
+*                                                                              *
+* Initializing: paths... done, bridge... done, plugins... done                 *
+********************************************************************************
+Loading Domain grids/cooler.ugx ... done.
+Performing integrity check on domain ... done.
+refining...
+
+approximation space:
+| ----------------------------------------------------------------------------------------------------------------------- |
+|  Number of DoFs (All Procs)                                                                                             |
+|  Algebra: Block 1 (divide by 1 for #Index)                                                                              |
+|                                                                                                                         |
+|    GridLevel   |       Domain |    0: cooler | 1: staticAir |       2: air |       3: cpu |    4: inflow |   5: outflow |
+| ----------------------------------------------------------------------------------------------------------------------- |
+| (lev,    0)    |          648 |           79 |           59 |          362 |           20 |           64 |           64 |
+| (lev,    0, g) |          648 |           79 |           59 |          362 |           20 |           64 |           64 |
+| (surf, top)    |          648 |           79 |           59 |          362 |           20 |           64 |           64 |
+| ----------------------------------------------------------------------------------------------------------------------- |
+| For Legend and Options: print_statistic("legend").                                                                      |
+| ----------------------------------------------------------------------------------------------------------------------- |
+
+ILU: please use 'set_ordering_algorithm(..)' in the future
+
+solving...
+SolveLinearTimeProblem, Linear Solver setup:
+BiCGStab( restart = 0, min_orthogonality = 0)
+ Convergence Check: StdConvCheck( max steps = 100, min defect = 1e-12, relative reduction = 1e-06)
+ Preconditioner: 
+ | GeometricMultigrid (V-Cycle)
+ |  Smoother (3x pre, 3x post): ILU( damping = ConstantDamping(1))
+ |  Basesolver ( Baselevel = 0, gathered base = false): AgglomeratingSolver: SuperLU
+
+>> Writing start values
+legacy SolveLinearTimeProblem
+++++++ TIMESTEP 1 BEGIN (current time: 0) ++++++
+++++++ Time step size: 0.02
+++++++ Assembling Matrix/Rhs for step size 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    2.683282e+02      -------
+   %    1:    5.451088e-15    2.031501e-17
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 2.031501e-17
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 2 BEGIN (current time: 0.02) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    2.943339e+00      -------
+   %    1:    2.404887e-15    8.170609e-16
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 8.170609e-16
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 3 BEGIN (current time: 0.04) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    1.227262e+00      -------
+   %    1:    1.363594e-15    1.111086e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.111086e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 4 BEGIN (current time: 0.06) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    7.260636e-01      -------
+   %    1:    9.071070e-16    1.249349e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.249349e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 5 BEGIN (current time: 0.08) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    5.090437e-01      -------
+   %    1:    6.302118e-16    1.238031e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.238031e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 6 BEGIN (current time: 0.1) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    3.897026e-01      -------
+   %    1:    4.910856e-16    1.260155e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.260155e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 7 BEGIN (current time: 0.12) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    3.130750e-01      -------
+   %    1:    4.212753e-16    1.345605e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.345605e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 8 BEGIN (current time: 0.14) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    2.584511e-01      -------
+   %    1:    3.281032e-16    1.269498e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.269498e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 9 BEGIN (current time: 0.16) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    2.167053e-01      -------
+   %    1:    2.418213e-16    1.115899e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.115899e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 10 BEGIN (current time: 0.18) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    1.832899e-01      -------
+   %    1:    2.017326e-16    1.100620e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.100620e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 11 BEGIN (current time: 0.2) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    1.557161e-01      -------
+   %    1:    1.853786e-16    1.190491e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.190491e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 12 BEGIN (current time: 0.22) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    1.325194e-01      -------
+   %    1:    1.648717e-16    1.244132e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.244132e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 13 BEGIN (current time: 0.24) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    1.127797e-01      -------
+   %    1:    1.189981e-16    1.055137e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.055137e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 14 BEGIN (current time: 0.26) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    9.587900e-02      -------
+   %    1:    1.241527e-16    1.294889e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.294889e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 15 BEGIN (current time: 0.28) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    8.137233e-02      -------
+   %    1:    9.046617e-17    1.111756e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.111756e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 16 BEGIN (current time: 0.3) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    6.891798e-02      -------
+   %    1:    8.522786e-17    1.236656e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.236656e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 17 BEGIN (current time: 0.32) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    5.823873e-02      -------
+   %    1:    5.767422e-17    9.903070e-16
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 9.903070e-16
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 18 BEGIN (current time: 0.34) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    4.910067e-02      -------
+   %    1:    5.487955e-17    1.117695e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.117695e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 19 BEGIN (current time: 0.36) ++++++
+++++++ Time step size: 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    4.130137e-02      -------
+   %    1:    5.334383e-17    1.291575e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.291575e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 20 BEGIN (current time: 0.38) ++++++
+++++++ Time step size: 0.02
+++++++ Assembling Matrix/Rhs for step size 0.02
+
+   % %%%%%%%%             BiCGStab              %%%%%%%%%%%
+   % %%%%%%%%   (Precond: Geometric MultiGrid)  %%%%%%%%%%%
+   %   Iter      Defect         Rate 
+   %    0:    3.466323e-02      -------
+   %    1:    3.610466e-17    1.041584e-15
+   % Absolute defect norm 1.000000e-12 reached after 1 steps.
+   % Relative reduction 1.000000e-06 reached after 1 steps.
+   % Average reduction over 1 steps: 1.041584e-15
+   % %%%%%  Iteration converged  %%%%%
+
+++++++ TIMESTEP 20 END   (current time: 0.4) ++++++
+done
+
+
