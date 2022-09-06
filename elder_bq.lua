@@ -17,12 +17,12 @@ ug_load_script ("util/load_balancing_util.lua")
 ------------------------------------------------------------------------------------------
 
 dim			= 2
-gridName	= "elder_quads_8x2.ugx"
+gridName	= "grids/elder_quads_8x2_bnd.ugx"
 
 numRefs 	= 5
 numPreRefs 	= 1
 endTime		= 10 * 365 * 24 * 60 * 60 -- [s] = 10 years
-dt			= endTime / 200
+dt			= endTime / 250
 
 vtk_file_name = "my_Elder"
 
@@ -40,7 +40,7 @@ function PressureStart(x, y, t, si)
 end
 
 ------------------------------------------------------------------------------------------
--- Different kinds of the Dirichlet boundary conditions
+-- Dirichlet boundary conditions for the salt on the top boundary
 ------------------------------------------------------------------------------------------
 
 
@@ -52,29 +52,10 @@ function ConcentrationDirichletBnd(x, y, t)
 	    return false, 0.0
 end
 
-----------------------
-
-function ConcentrationDirichletLinearBnd(x, y, t)
-		if x > 150 and x < 450 then
-			return true, (450.0-x)/300
-		end
-	
-	    return false, 0.0
-	    
-end
-
-----------------------
-
-function ConcentrationDirichletQuadBnd(x, y, t)
-	
-	    return true, x*(600.0-x)/90000;
-end
-
 ------------------------------------------------------------------------------------------
--- Get command line parameters
+-- Initialize ug4; use the block algebra for the pairs (c, p) (2 components per block)
 ------------------------------------------------------------------------------------------
 
--- initialize ug with the world dimension 2 and scalar matrix entries
 InitUG(dim, AlgebraType("CPU", 2));
 
 --------------------------------------------------------------------------------
@@ -108,8 +89,8 @@ Gravity:set_entry(1, -9.81)
 -- create dirichlet boundary for concentration
 dirichletBND = DirichletBoundary()
 dirichletBND:add("ConcentrationDirichletBnd", "c", "TopBnd")
--- TopCorners
 dirichletBND:add(0, "c", "BottomBnd")
+-- TopCorners
 dirichletBND:add(0, "p", "TopCorners")
 
 -- density
@@ -201,7 +182,6 @@ out:clear_selection()
 out:select_nodal("c", "c")
 out:select_nodal("p", "p")
 out:select(DarcyVelocity, "q")
-print ("Output to file " .. vtk_file_name .. ".vtu")
 
 vtkObserver = VTKOutputObserver(vtk_file_name, out)
 
@@ -211,16 +191,23 @@ vtkObserver = VTKOutputObserver(vtk_file_name, out)
 
 -- grid function for the solution
 u = GridFunction(approxSpace)
+
+-- Set the initial condition
 Interpolate("PressureStart", u, "p")
 Interpolate(0, u, "c")
 
 
--- Set the initial condition
+-- util.SolveNonlinearTimeProblem (u, domainDisc, solver, out, vtk_file_name, "ImplEuler",
+-- 1, 0, endTime, dt)
+-- exit ()
+
+-- Set up the time discretization and the time stepping scheme
 timeDisc = ThetaTimeStep(domainDisc, 1.0) -- Implicit Euler: 1.0
 timeIntegrator = SimpleTimeIntegrator(timeDisc)
 timeIntegrator:set_solver(solver)
 timeIntegrator:attach_finalize_observer(vtkObserver)
 
+-- Compute the time steps
 timeIntegrator:set_time_step (dt)
 timeIntegrator:apply (u, endTime, u, 0.0)
 
