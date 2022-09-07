@@ -1,10 +1,10 @@
 ----------------------------------------------------------
 --
---   Lua - Script to simulate the Elder problem (boussinesq approximation), 2D
+--  Lua-script for simulation of the Elder problem (with boussinesq approximation)
 --
---   Author: Ekaterina Vasilyeva
+--  Author: Ekaterina Vasilyeva
 --
---  Created for AMFS 2021
+--  Originally implemented for AMFS 2021
 --
 --  Based on Examples/elder_adapt.lua
 ----------------------------------------------------------
@@ -22,7 +22,7 @@ gridName	= "grids/elder_quads_8x2_bnd.ugx"
 numRefs 	= 5
 numPreRefs 	= 1
 endTime		= 10 * 365 * 24 * 60 * 60 -- [s] = 10 years
-dt			= endTime / 250
+dt			= 10 * 24 * 60 * 60 -- [s] = 10 days
 
 vtk_file_name = "my_Elder"
 
@@ -150,9 +150,7 @@ solverDesc = {
 		type = "bicgstab",
 		precond = {
 	        type            = "gmg",        -- preconditioner ["gmg", "ilu", "ilut", "jac", "gs", "sgs"]
-	        smoother		= {
-	        	type		= "ilu"
-	        },
+	        smoother		= "ilu",		-- pre- and postsmoother, only for gmg ["ilu", "ilut", "jac", "gs", "sgs"]
 	        cycle           = "V",          -- gmg-cycle ["V", "F", "W"]
 	        preSmooth       = 2,            -- number presmoothing steps
 	        postSmooth      = 2,            -- number postsmoothing steps
@@ -183,8 +181,6 @@ out:select_nodal("c", "c")
 out:select_nodal("p", "p")
 out:select(DarcyVelocity, "q")
 
-vtkObserver = VTKOutputObserver(vtk_file_name, out)
-
 ------------------------------------------------------------------------------------------
 -- Set up and apply the time stepping scheme
 ------------------------------------------------------------------------------------------
@@ -196,20 +192,15 @@ u = GridFunction(approxSpace)
 Interpolate("PressureStart", u, "p")
 Interpolate(0, u, "c")
 
-
--- util.SolveNonlinearTimeProblem (u, domainDisc, solver, out, vtk_file_name, "ImplEuler",
--- 1, 0, endTime, dt)
--- exit ()
-
 -- Set up the time discretization and the time stepping scheme
 timeDisc = ThetaTimeStep(domainDisc, 1.0) -- Implicit Euler: 1.0
 timeIntegrator = SimpleTimeIntegrator(timeDisc)
 timeIntegrator:set_solver(solver)
-timeIntegrator:attach_finalize_observer(vtkObserver)
+timeIntegrator:attach_observer(VTKOutputObserver(vtk_file_name, out))
 
 -- Compute the time steps
-timeIntegrator:set_time_step (dt)
-timeIntegrator:apply (u, endTime, u, 0.0)
+timeIntegrator:set_time_step(dt)
+timeIntegrator:apply(u, endTime, u, 0.0)
 
 ------------------------------------------------------------------------------------------
 -- End of File
