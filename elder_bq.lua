@@ -19,14 +19,14 @@ ug_load_script ("util/load_balancing_util.lua")
 dim			= 2
 gridName	= "grids/elder_quads_8x2_bnd.ugx"
 
-numRefs 	= 5
-numPreRefs 	= 1
+numRefs 	= 5 -- number of refinements of the initial grid
+numPreRefs 	= 1 -- this grid level is considered as the most coarse one for the numerics
 endTime		= 10 * 365 * 24 * 60 * 60 -- [s] = 10 years
 dt			= 10 * 24 * 60 * 60 -- [s] = 10 days
 
-upwind		= "partial"
+upwind		= "partial" -- upwind type for the transport equation: "no", "full" or "partial"
 
-vtk_file_name = "my_Elder"
+vtk_file_name = "my_Elder" -- VTK output file name base
 
 ------------------------------------------------------------------------------------------
 -- Geological parameters, initial and boundary conditions
