@@ -110,7 +110,7 @@ end
 
 function util.smooth.create(smooth)
 
-	local smoother = nil
+	local smoother
 	
 	if 	    smooth == "ilu"  then smoother = ILU();
 	elseif 	smooth == "ilut" then smoother = ILUT(1e-6);
@@ -135,7 +135,7 @@ end
 
 function util.solver.create(sol, precond)
 
-	local solver = nil
+	local solver
 	
 	if 		sol == "ls" 		then 
 		solver = LinearSolver();

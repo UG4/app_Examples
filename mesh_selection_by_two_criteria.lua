@@ -49,7 +49,7 @@ function Vec3dSubtract(vec1, vec2)
 end
 
 -----------------------------
--- Euklidian norm
+-- Euclidian norm
 -----------------------------
 function Vec3dNorm(vec)
 	normSq = vec:coord(0)*vec:coord(0) + vec:coord(1)*vec:coord(1) + vec:coord(2)*vec:coord(2)

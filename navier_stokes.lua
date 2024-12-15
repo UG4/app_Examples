@@ -143,7 +143,7 @@ end
 -- Discretization
 --------------------------------------------------------------------------------
 globalNSDisc = nil
-function CreateDomainDisc(approxSpace, discType, vorder, porder)
+function CreateDomainDisc(approxSpace, discType, vorder, porder) -- todo check usage of parameters
 
 	local FctCmp = approxSpace:names()
 	NavierStokesDisc = NavierStokes(FctCmp, {"Inner"}, discType)
@@ -220,7 +220,7 @@ function CreateSolver(approxSpace, discType, p)
 
 	local base = LU()
 	
-	local smoother = nil
+	local smoother
 	if discType == "fvcr" or discType == "fecr" then 
 		smoother = ComponentGaussSeidel(0.1, {"p"}, {1,2}, {1})
 	elseif discType == "fv1" then 

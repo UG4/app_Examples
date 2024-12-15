@@ -32,7 +32,7 @@ numTimeSteps 	= util.GetParamNumber("-numTimeSteps", 100)
 maxLvl			= util.GetParamNumber("-maxLvl",    5)
 -- timestep in seconds: 3153600 sec = 0.1 year
 --dt 				= util.GetParamNumber("-dt", 3.1536e6)
-dt 				= util.GetParamNumber("-dt", 2.e6)
+dt 				= util.GetParamNumber("-dt", 2.0e6)
 minStepSize     = util.GetParamNumber("-minStepSize", dt/40);
 stepReducFac  	= util.GetParamNumber("-stepReducFac", 0.25);
 verbose		  	= util.HasParamOption("-verbose");
@@ -339,7 +339,6 @@ for step = 1, numTimeSteps do
 	print(" ## rate: " .. linSolStat.rate)
 	print(" ## avg_red: " .. linSolStat.avg_rate)
 	print(" ##############################################")
-	
 	local linSolStatFile = io.open("LinSolverStats.txt", "a")
 	linSolStatFile:write(" " .. step .. " \t " .. linSolStat.step .. " \t " .. linSolStat.defect .. " \t " .. linSolStat.rate .. " \t " .. linSolStat.avg_rate .. " \n")		
 	io.close(linSolStatFile)
