@@ -26,7 +26,7 @@ dt			= 10 * 24 * 60 * 60 -- [s] = 10 days
 
 upwind		= "partial" -- upwind type for the transport equation: "no", "full" or "partial"
 
-vtk_file_name = "my_Elder" -- VTK output file name base
+vtk_file_name = "Elder_Bq_GL" .. numRefs -- VTK output file name base
 
 ------------------------------------------------------------------------------------------
 -- Geological parameters, initial and boundary conditions
@@ -68,6 +68,9 @@ InitUG(dim, AlgebraType("CPU", 2));
 dom = util.CreateDomain(gridName, numPreRefs, {"Inner", "LeftRightBnd", "BottomBnd", "TopBnd","TopCorners"})
 balancer.RefineAndRebalanceDomain(dom, numRefs - numPreRefs)
 
+print("Domain info:")
+print(dom:domain_info():to_string())
+
 -- set up approximation space
 approxSpace = ApproximationSpace(dom)
 approxSpace:add_fct("c", "Lagrange", 1)
@@ -75,7 +78,8 @@ approxSpace:add_fct("p", "Lagrange", 1)
 approxSpace:init_levels()
 approxSpace:init_top_surface()
 
-print("approximation space:")
+print("Approximation space:")
+--approxSpace:print_layout_statistic() -- makes sense only for parallel runs
 approxSpace:print_statistic()
 
 -- Order the DoFs:
@@ -196,6 +200,18 @@ out:select(DarcyVelocity, "q")
 -- Set up and apply the time stepping scheme
 ------------------------------------------------------------------------------------------
 
+-- Set up the time discretization and the time stepping scheme
+timeDisc = ThetaTimeStep(domainDisc, 1.0) -- Implicit Euler: 1.0
+timeIntegrator = SimpleTimeIntegrator(timeDisc)
+timeIntegrator:set_solver(solver)
+timeIntegrator:attach_observer(VTKOutputObserver(vtk_file_name, out))
+
+timeIntegrator:set_time_step(dt)
+
+------------------------------------------------------------------------------------------
+-- Prepare the initial guess for the pressure
+------------------------------------------------------------------------------------------
+
 -- grid function for the solution
 u = GridFunction(approxSpace)
 
@@ -203,14 +219,28 @@ u = GridFunction(approxSpace)
 Interpolate("PressureStart", u, "p")
 Interpolate(0, u, "c")
 
--- Set up the time discretization and the time stepping scheme
-timeDisc = ThetaTimeStep(domainDisc, 1.0) -- Implicit Euler: 1.0
-timeIntegrator = SimpleTimeIntegrator(timeDisc)
-timeIntegrator:set_solver(solver)
-timeIntegrator:attach_observer(VTKOutputObserver(vtk_file_name, out))
+-- Fix the mass fraction and solve the linear problem for the pressure
 
+fixer = DirichletBoundary()
+domainDisc:add(fixer)
+fixer:invert_subset_selection()
+fixer:add("c", "")
+
+solver:init(AssembledOperator(domainDisc))
+solver:prepare(u)
+
+-- apply the solver for the stationary pressure problem
+if not solver:apply(u) then
+	print("===> THE PREPARATION PHASE FAILED! <===")
+	exit()
+end
+
+domainDisc:remove (fixer)
+
+------------------------------------------------------------------------------------------
 -- Compute the time steps
-timeIntegrator:set_time_step(dt)
+------------------------------------------------------------------------------------------
+
 timeIntegrator:apply(u, endTime, u, 0.0)
 
 ------------------------------------------------------------------------------------------

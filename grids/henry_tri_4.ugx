@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grid name="defGrid">
+	<vertices coords="3">0 0 0 0 -1 0 2 -1 0 2 0 0 1 -1 0 1 0 0</vertices>
+	<edges>0 1 2 3 1 4 4 2 3 5 5 0 4 5 4 0 2 5</edges>
+	<triangles>0 1 4 4 5 0 5 4 2 2 3 5</triangles>
+	<subset_handler name="defSH">
+		<subset name="Medium" color="0.588235 0.588235 1 1" state="393216">
+			<edges>6 7 8</edges>
+			<faces>0 1 2 3</faces>
+		</subset>
+		<subset name="Top" color="1 0 0 1" state="393216">
+			<vertices>5</vertices>
+			<edges>4 5</edges>
+		</subset>
+		<subset name="Bottom" color="0 1 0 1" state="393216">
+			<vertices>4</vertices>
+			<edges>2 3</edges>
+		</subset>
+		<subset name="Sea" color="0 0 1 1" state="393216">
+			<vertices>2 3</vertices>
+			<edges>1</edges>
+		</subset>
+		<subset name="Inflow" color="1 0 1 1" state="393216">
+			<vertices>0 1</vertices>
+			<edges>0</edges>
+		</subset>
+	</subset_handler>
+	<subset_handler name="markSH">
+		<subset name="crease" color="1 1 1 1" state="0"/>
+		<subset name="fixed" color="1 1 1 1" state="0"/>
+	</subset_handler>
+	<selector name="defSel"/>
+	<projection_handler name="defPH" subset_handler="0">
+		<default type="default">0 0</default>
+	</projection_handler>
+</grid>
+
