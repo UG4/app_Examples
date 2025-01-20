@@ -169,7 +169,7 @@ solverDesc = {
 	        cycle		= "V",		-- gmg-cycle ["V", "F", "W"]
 	        preSmooth	= 2,		-- number presmoothing steps
 	        postSmooth	= 2,		-- number postsmoothing steps
-	        rap			= false,	-- comutes RAP-product instead of assembling if true
+	        rap			= false,	-- computes RAP-product instead of assembling if true
 	        baseLevel	= numPreRefs,-- gmg - coarsest level
 	        baseSolver	= "lu",
 		},
@@ -177,7 +177,7 @@ solverDesc = {
 		convCheck = {
 	        type		= "standard",
 	        iterations	= 100,		-- number of iterations
-	        absolute	= 1e-8,		-- absolut value of defact to be reached; usually 1e-8 - 1e-10 (may not be larger than in newton section)
+	        absolute	= 1e-8,		-- absolut value of defect to be reached; usually 1e-8 - 1e-10 (may not be larger than in newton section)
 	        reduction	= 1e-5,		-- reduction factor of defect to be reached
 	        verbose		= true,		-- print convergence rates if true
 		}

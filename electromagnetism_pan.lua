@@ -52,7 +52,7 @@ gridName = "grids/" .. geometry .. ".ugx"
 neededSubsets = {"box", "pan", "coilPos", "coilNeg", "cut0", "cut1", "boxBnd"}
 
 print (" Geometry: " .. geometry .. " (file " .. gridName .. ")")
-print (" Choosen Parameter:")
+print (" Chosen Parameter:")
 print ("    numRefs    = " .. numRefs)
 print ("    numPreRefs = " .. numPreRefs)
 
