@@ -143,7 +143,7 @@ end
 -- Discretization
 --------------------------------------------------------------------------------
 globalNSDisc = nil
-function CreateDomainDisc(approxSpace, discType, vorder, porder) -- todo check usage of parameters
+function CreateDomainDisc(approxSpace, discType, vorder, porder)
 
 	local FctCmp = approxSpace:names()
 	NavierStokesDisc = NavierStokes(FctCmp, {"Inner"}, discType)
