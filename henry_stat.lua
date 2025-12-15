@@ -168,14 +168,14 @@ solver = util.solver.CreateSolver (
 		precond = {
 	        type		= "gmg",	-- preconditioner ["gmg", "ilu", "ilut", "jac", "gs", "sgs"]
 	        smoother	= {			-- pre- and postsmoother, only for gmg
-	        	type = "ilu",		-- type of the smoothers ["ilu", "ilut", "jac", "gs", "sgs"]
-	        	beta = 0.75,		-- parameters of the smoothers [beta for ilu only]
+	        	type = "ilu",		-- type of the smoother ["ilu", "ilut", "jac", "gs", "sgs"]
+	        	beta = 0.75,		-- parameters of the smoother [beta for ilu only]
 	        	overlap = true		-- parallelization parameters
 	        },
 	        cycle		= "V",		-- gmg-cycle ["V", "F", "W"]
 	        preSmooth	= 4,		-- number presmoothing steps
 	        postSmooth	= 4,		-- number postsmoothing steps
-	        rap			= true,	-- comutes RAP-product instead of assembling if true
+	        rap			= true,	-- computes RAP-product instead of assembling if true
 	        baseLevel	= numPreRefs,-- gmg - coarsest level
 	        baseSolver	= "lu",
 		},
@@ -183,7 +183,7 @@ solver = util.solver.CreateSolver (
 		convCheck = {
 	        type		= "standard",
 	        iterations	= 100,		-- number of iterations
-	        absolute	= 0.5e-9,	-- absolut value of defact to be reached
+	        absolute	= 0.5e-9,	-- absolut value of defect to be reached
 	        reduction	= 1e-4,		-- reduction factor of defect to be reached
 	        verbose		= true,		-- print convergence rates if true
 		}

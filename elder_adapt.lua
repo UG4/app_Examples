@@ -32,7 +32,7 @@ numTimeSteps 	= util.GetParamNumber("-numTimeSteps", 100)
 maxLvl			= util.GetParamNumber("-maxLvl",    5)
 -- timestep in seconds: 3153600 sec = 0.1 year
 --dt 				= util.GetParamNumber("-dt", 3.1536e6)
-dt 				= util.GetParamNumber("-dt", 2.e6)
+dt 				= util.GetParamNumber("-dt", 2.0e6)
 minStepSize     = util.GetParamNumber("-minStepSize", dt/40);
 stepReducFac  	= util.GetParamNumber("-stepReducFac", 0.25);
 verbose		  	= util.HasParamOption("-verbose");
@@ -177,7 +177,7 @@ solverDesc = {
 	        cycle           = "V",          -- gmg-cycle ["V", "F", "W"]
 	        preSmooth       = 3,            -- number presmoothing steps
 	        postSmooth      = 3,            -- number postsmoothing steps
-	        rap             = false,        -- comutes RAP-product instead of assembling if true
+	        rap             = false,        -- computes RAP-product instead of assembling if true
 			rim				= false,			-- smooth on surface rim
 			emulateFullRefined	= false,	-- emulate full grid (works with rap=true only)
 	        baseLevel       = 0,               -- gmg - baselevel
@@ -189,7 +189,7 @@ solverDesc = {
 		convCheck = {
 	        type            = "standard",
 	        iterations      = 100,          -- number of iterations
-	        absolute        = 1e-8,        -- absolut value of defact to be reached; usually 1e-8 - 1e-10 (must be larger than in newton section)
+	        absolute        = 1e-8,        -- absolut value of defect to be reached; usually 1e-8 - 1e-10 (must be larger than in newton section)
 	        reduction       = 1e-3,         -- reduction factor of defect to be reached; usually 1e-7 - 1e-8 (must be larger than in newton section)
 	        verbose         = true,         -- print convergence rates if true
 		}
