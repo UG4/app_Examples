@@ -154,16 +154,24 @@ solver = util.solver.CreateSolver(solverDesc)
 
 
 print("\nsolving...")
+local myclock = CuckooClock()
+myclock:tic()
 A = AssembledLinearOperator(domainDisc)
 u = GridFunction(approxSpace)
 b = GridFunction(approxSpace)
 u:set(0.0)
 domainDisc:adjust_solution(u)
+
+print("ø        time prepare ="..myclock:toc())
+myclock:tic()
 domainDisc:assemble_linear(A, b)
-
-
+print("ø        time assemble ="..myclock:toc())
+myclock:tic()
 solver:init(A, u)
+print("ø        time init ="..myclock:toc())
+myclock:tic()
 solver:apply(u, b)
+print("ø        time apply ="..myclock:toc())
 
 print("NOTE: The hard limit on iteration numbers is intentional here, to allow")
 print("      for a better comparability of run-times. Please make sure that the")
